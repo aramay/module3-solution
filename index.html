@@ -1,28 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
   <head>
     <title>Narrow Down Your Menu Choice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/styles.css">
+
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+
   </head>
-<body>
-   <div class="container">
-    <h1>Narrow Down Your Chinese Menu Choice</h1>
 
-    <div class="form-group">
-      <input type="text" placeholder="search term" class="form-control">
-    </div>
-    <div class="form-group narrow-button">
-      <button class="btn btn-primary">Narrow It Down For Me!</button>
-    </div>
+  <body ng-app="NarrowItDownApp">
 
-    <!-- Bonus loader (see Bonus section of the assignment) -->
-    <items-loader-indicator></items-loader-indicator>
 
-    <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
-  </div>
+        <div ng-controller="NarrowItDownController as ctrl" class="container">
 
-</body>
+            <h1>Narrow Down Your Chinese Menu Choice</h1>
+
+            <div class="form-group">
+              <input type="text" ng-model="ctrl.searchTerm" placeholder="search term" class="form-control">
+            </div>
+            <div class="form-group narrow-button">
+              <button ng-click="ctrl.logMatchedMenuItems(ctrl.searchTerm)" class="btn btn-primary">Narrow It Down For Me!</button>
+            </div>
+
+            <!-- Bonus loader (see Bonus section of the assignment) -->
+            <items-loader-indicator></items-loader-indicator>
+
+            <!-- found-items should be implemented as a component -->
+            <found-items found-items="...." on-remove="...."></found-items>
+
+            <div>
+                {{ctrl}}
+            </div>
+
+        </div>
+
+  </body>
 </html>
