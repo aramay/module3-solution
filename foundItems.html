@@ -1,13 +1,20 @@
 <ol>
     <li ng-repeat="item in ctrl.found">
-        found ITEM NAME
+
         <h3>
-            {{item.name}}
-        </h3> with
-        description
-        <h3>
-            {{item.description}}
+            ITEM NAME
         </h3>
+        <p>
+            {{item.name}}
+        </p>
+
+        <h3>
+            DESCRIPTION
+        </h3>
+        <p>
+            {{item.description}}
+        </p>
+
 
         <button class="btn btn-danger"  ng-click="ctrl.onRemove({index: $index})">Don't want this one!
         </button>
