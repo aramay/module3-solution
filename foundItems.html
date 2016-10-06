@@ -9,9 +9,17 @@
             {{item.description}}
         </h3>
 
-        <button class="btn btn-danger"  ng-click="ctrl.onRemove({index: $index})">Remove Item
+        <button class="btn btn-danger"  ng-click="ctrl.onRemove({index: $index})">Don't want this one!
         </button>
 
     </li>
 
 </ol>
+
+<!-- <div class="error" ng-if="ctrl.errorMessage.noInput">
+    {{ctrl.errorMessage.noInput}}
+</div>
+
+<div class="error" ng-if="ctrl.errorMessage.noMatch">
+    {{ctrl.errorMessage.noMatch}}
+</div> -->

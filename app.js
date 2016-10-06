@@ -34,6 +34,8 @@
 
         ctrl.found = MenuSearchService.getItems();
 
+        // ctrl.errorMessage = MenuSearchService.getErrors();
+
         ctrl.logMatchedMenuItems = function (searchTerm) {
 
             console.log(searchTerm);
@@ -61,20 +63,22 @@
         var found = [];
 
         service.menuItems = "";
+        var errorMessage = {
+            noInput: "",
+            noMatch: ""
+        };
 
         service.getMatchedMenuItems = function (searchTerm) {
 
             var response = $http({
                 method: "GET",
                 url: (ApiBasePath + "/menu_items.json"),
-                // params: {
-                //     category: searchTerm
-                // }
-                // console.log(response);
-            }).then(function success(result) {
-                console.log("success http request ", result.data);
 
+            }).then(function success(result) {
+
+                console.log("success http request ", result.data);
                 var menu_items = result.data.menu_items;
+
 
                 for (var i = 0; i < menu_items.length; i++) {
 
@@ -84,9 +88,10 @@
                     console.log(searchTerm);
 
                     if (searchTerm === "") {
-                        console.log("not found");
                         // found.push("No matching items found");
-                        found = "No matching items found";
+                        // found = "No input provided";
+                        errorMessage.noInput = "No input provided";
+                        console.log(errorMessage);
                         break;
                     }
 
@@ -94,14 +99,16 @@
                         console.log("found matching items");
                         found.push(menu_items[i]);
                     } else {
-
+                        // found = "No matching items were found";
+                        errorMessage.noMatch = "No matching items were found";
+                        console.log(errorMessage);
                     }
 
                 }
                 // console.log(found);
                 // return false;
 
-            }, function error(error) {
+            }).catch(function error(error) {
                 console.log("http request failed ", error);
             });
 
@@ -113,6 +120,10 @@
         service.getItems = function () {
             return found;
         };
+
+        // service.getErrors = function () {
+        //     return errorMessage;
+        // };
 
         service.removeItems = function (itemIndex) {
             found.splice(itemIndex, 1);
