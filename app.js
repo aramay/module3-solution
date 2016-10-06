@@ -62,12 +62,6 @@
 
         var found = [];
 
-        service.menuItems = "";
-        var errorMessage = {
-            noInput: "",
-            noMatch: ""
-        };
-
         service.getMatchedMenuItems = function (searchTerm) {
 
             var response = $http({
@@ -90,8 +84,9 @@
                     if (searchTerm === "") {
                         // found.push("No matching items found");
                         // found = "No input provided";
-                        errorMessage.noInput = "No input provided";
-                        console.log(errorMessage);
+                        found = "";
+                        console.log("No input provided");
+                        // console.log(errorMessage);
                         break;
                     }
 
@@ -99,9 +94,7 @@
                         console.log("found matching items");
                         found.push(menu_items[i]);
                     } else {
-                        // found = "No matching items were found";
-                        errorMessage.noMatch = "No matching items were found";
-                        console.log(errorMessage);
+                        console.log("No matching items were found");
                     }
 
                 }
