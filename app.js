@@ -12,7 +12,7 @@
     function FoundItemsDirective() {
 
         var ddo = {
-            templateUrl: 'loader/itemsloaderindicator.template.html',
+            templateUrl: 'foundItems.html',
             scope: {
                 found: '<',
                 onRemove: '&'
@@ -32,6 +32,8 @@
 
         ctrl.searchTerm = "";
 
+        ctrl.found = MenuSearchService.getItems();
+
         ctrl.logMatchedMenuItems = function (searchTerm) {
 
             console.log(searchTerm);
@@ -40,14 +42,12 @@
 
             console.log("promise ",promise);
 
-            // promise.then(function (response) {
-            //     ctrl.items = response.data;
-            // }).catch(function (error) {
-            //     console.log("Http request failed ", error);
-            // });
-
             console.log(ctrl.items);
 
+        };
+
+        ctrl.removeItems = function (itemIndex) {
+            MenuSearchService.removeItems(itemIndex);
         };
 
         console.log(ctrl);
@@ -77,42 +77,45 @@
                 var menu_items = result.data.menu_items;
 
                 for (var i = 0; i < menu_items.length; i++) {
-                    // console.log(menu_items[i]);
-                    // console.log(menu_items[i].description);
 
                     var description = menu_items[i].description;
-                    console.log(found);
-                    // if (searchTerm === undefined) {
-                    //     return "nothing found";
-                    // }
-                    // else if (name.toLowerCase().indexOf(searchTerm) !== -1) {
-                    //     return true;
-                    // }
+                    // console.log(found);
 
-                    if (searchTerm === undefined) {
+                    console.log(searchTerm);
+
+                    if (searchTerm === "") {
+                        console.log("not found");
+                        // found.push("No matching items found");
+                        found = "No matching items found";
                         break;
                     }
 
-                    if (description.search(searchTerm) != -1) {
-                        console.log("not found");
-                        console.log(found);
-                    }
-                    // else {
-                    //     console.log(menu_items[i]);
-                    //     console.log(found.push(menu_items[i]));
-                    //
-                    // }
+                    else if (description.search(searchTerm) != -1) {
+                        console.log("found matching items");
+                        found.push(menu_items[i]);
+                    } else {
 
+                    }
 
                 }
-                console.log(found);
-                return false;
+                // console.log(found);
+                // return false;
 
             }, function error(error) {
                 console.log("http request failed ", error);
             });
-            // console.log(response);
+
+            console.log(found);
+            console.log(response);
             return response;
+        };
+
+        service.getItems = function () {
+            return found;
+        };
+
+        service.removeItems = function (itemIndex) {
+            found.splice(itemIndex, 1);
         };
     }
 
